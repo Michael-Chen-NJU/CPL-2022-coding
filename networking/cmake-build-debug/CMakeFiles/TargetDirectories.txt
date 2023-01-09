@@ -1,0 +1,3 @@
+D:/clion_code/networking/cmake-build-debug/CMakeFiles/uc-server.dir
+D:/clion_code/networking/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/clion_code/networking/cmake-build-debug/CMakeFiles/rebuild_cache.dir

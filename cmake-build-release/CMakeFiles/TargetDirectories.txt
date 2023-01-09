@@ -83,3 +83,7 @@ D:/clion_code/cmake-build-release/CPL-Exam-21/CMakeFiles/bsearch.dir
 D:/clion_code/cmake-build-release/CPL-Exam-21/CMakeFiles/gobang.dir
 D:/clion_code/cmake-build-release/CPL-Exam-21/CMakeFiles/edit_cache.dir
 D:/clion_code/cmake-build-release/CPL-Exam-21/CMakeFiles/rebuild_cache.dir
+D:/clion_code/cmake-build-release/networking/CMakeFiles/uc-server.dir
+D:/clion_code/cmake-build-release/networking/CMakeFiles/uc-client.dir
+D:/clion_code/cmake-build-release/networking/CMakeFiles/edit_cache.dir
+D:/clion_code/cmake-build-release/networking/CMakeFiles/rebuild_cache.dir

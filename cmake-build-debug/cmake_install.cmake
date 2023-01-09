@@ -87,6 +87,11 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("D:/clion_code/cmake-build-debug/CPL-Exam-21/cmake_install.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("D:/clion_code/cmake-build-debug/networking/cmake_install.cmake")
+endif()
+
 if(CMAKE_INSTALL_COMPONENT)
   set(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
 else()
