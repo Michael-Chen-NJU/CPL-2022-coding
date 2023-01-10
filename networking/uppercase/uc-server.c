@@ -4,10 +4,11 @@
 * Created by HW on 1/4/2023.
 */
 #include <stdio.h>
-#include <wspiapi.h>
-//网络通信需要包含的头文件
-#include <winsock2.h>
-#include <winsock.h>
+#include <netdb.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -28,7 +29,7 @@ int main() {
         //printf: standard output
         //fprintf: standard error
         fprintf(stderr, "getaddrinfo() failed\n");
-        //exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     //create socket创建一个链接的门卫
@@ -38,7 +39,7 @@ int main() {
                                               bind_addr->ai_protocol);
     if (socket_listen == -1) {
         fprintf(stderr, "socket() failed\n");
-        //exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     //bind 绑定 0:success; -1:error
@@ -47,23 +48,39 @@ int main() {
              bind_addr->ai_addr,
              bind_addr->ai_addrlen) != 0) {
         fprintf(stderr, "bind() failed\n");
-        //exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
     //freeaddrinfo(bind_addr);
     //listen 0：success ;-1 : error
     //第二个参数 ：限制有多少个请求可以在此等待，剩余的请求将被丢弃
     if (listen(socket_listen, 32) != 0) {
         fprintf(stderr, "listen() failed\n");
-        //exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
 
     //accept :block until there is a new connection from the clients
     //accept : fd >= 0; -1 : error
+    //return a socket_client
+    //TODO:use select instead
+    //two pointers
     unsigned long long socket_client = accept(socket_listen, NULL, NULL);
     if (socket_client == -1) {
         fprintf(stderr, "accept() failed\n");
-        //exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
     printf("Connection Established\n");
+    char text[1024] = {0};
+    int bytes_received = recv(socket_client, text, sizeof(text),0);//return how many bytes has received
+    if(bytes_received == -1) {
+        fprintf(stderr, "recv() failed\n");
+        exit(EXIT_FAILURE);
+    }
+    printf("Received %d bytes: %.*s\n",
+           bytes_received,bytes_received,text);
+
+    //close the socket
+    //mind the time that the server and client must be closed at the same time
+    close(socket_listen);
+    close(socket_client);
     return 0;
 }
