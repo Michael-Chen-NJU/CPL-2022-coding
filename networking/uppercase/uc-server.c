@@ -3,15 +3,11 @@
 *
 * Created by HW on 1/4/2023.
 */
-#include <stdio.h>
-#include <netdb.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#define CHANGE 32
+#include "basic/networking.h"
 
 
 #pragma comment(lib, "ws2_32.lib")
-
 int main() {
     const char *NAME = NULL; //ip(hostname)
     const char *SERVICE = "8000"; //port number
@@ -69,14 +65,18 @@ int main() {
         exit(EXIT_FAILURE);
     }
     printf("Connection Established\n");
-    char text[1024] = {0};
-    int bytes_received = recv(socket_client, text, sizeof(text),0);//return how many bytes has received
-    if(bytes_received == -1) {
-        fprintf(stderr, "recv() failed\n");
-        exit(EXIT_FAILURE);
+
+    for (int j = 0; j < 10; ++j) {
+        char text[1024];
+        RECEIVE(socket_client, text);
+
+        for (int i = 0; i < strlen(text); ++i) {
+            if (text[i] >= 'a' && text[i] <= 'z') {
+                text[i] -= CHANGE;
+            }
+        }
+        SEND(socket_client, text);
     }
-    printf("Received %d bytes: %.*s\n",
-           bytes_received,bytes_received,text);
 
     //close the socket
     //mind the time that the server and client must be closed at the same time
